@@ -169,14 +169,3 @@ git push
 
 ---
 
-## Mentor Notes
-
-Aaj onek kaj hoyeche. Ekjon beginner er jonno ei amount of work first day e excellent.
-
-Porer session e main.go lekhar sathe puro system locally chalabe. Seটাই prothom real milestone - ekta working API docker e chole, database connected, curl diye test hobe.
-
-Rest nao. Fresh mind e code valo hoy.
-
----
-
-> Day 1 complete. Environment ready. Architecture understood. Code started.
