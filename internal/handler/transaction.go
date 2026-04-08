@@ -9,16 +9,20 @@ import (
 	"github.com/Shihab369/Tapx-lite/internal/service"
 )
 
+// TransactionHandler handles HTTP requests for transaction operations.
 type TransactionHandler struct {
 	service *service.TransactionService
 }
 
+// NewTransactionHandler returns a new TransactionHandler with the given service.
 func NewTransactionHandler(service *service.TransactionService) *TransactionHandler {
 	return &TransactionHandler{service: service}
 }
 
+// HealthCheck godoc
+// GET /health
+// Returns server liveness status. Used by load balancers and container orchestrators.
 func (h *TransactionHandler) HealthCheck(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{
 		"status":  "ok",
@@ -26,6 +30,10 @@ func (h *TransactionHandler) HealthCheck(w http.ResponseWriter, r *http.Request)
 	})
 }
 
+// Sync godoc
+// POST /sync
+// Accepts a batch of offline transactions and reconciles them against the ledger.
+// Returns lists of accepted and rejected transaction IDs.
 func (h *TransactionHandler) Sync(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -33,8 +41,7 @@ func (h *TransactionHandler) Sync(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req model.SyncRequest
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "invalid request body", http.StatusBadRequest)
 		return
 	}
@@ -50,11 +57,13 @@ func (h *TransactionHandler) Sync(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(resp)
 }
 
+// GetBalance godoc
+// GET /balance?user_id={id}
+// Returns the current account balance for the specified user.
 func (h *TransactionHandler) GetBalance(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -79,7 +88,6 @@ func (h *TransactionHandler) GetBalance(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]int{
 		"user_id": userID,
