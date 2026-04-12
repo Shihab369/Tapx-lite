@@ -98,12 +98,12 @@ id, table_name, operation (INSERT/UPDATE/DELETE), row_id, changed_by → users, 
 
 ## Key Concepts Applied
 
-- **RBAC** — roles + users
-- **Partitioning** — transactions split by month
-- **Constraints** — CHECK, UNIQUE, FOREIGN KEY
-- **Audit trail** — audit_log tracks all changes
-- **Observability** — sync_batches tracks device sync behavior
-- **Indexes** — on all frequently queried columns
+- **RBAC** roles + users
+- **Partitioning** transactions split by month
+- **Constraints** CHECK, UNIQUE, FOREIGN KEY
+- **Audit trail** audit_log tracks all changes
+- **Observability** sync_batches tracks device sync behavior
+- **Indexes** on all frequently queried columns
 
 ---
 
