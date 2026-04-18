@@ -119,8 +119,3 @@ SERVER_PORT=8080
 
 - [Database Schema](docs/DATABASE.md)
 - [Environment Setup](docs/dev-environment-setup.md)
-
-
-## Author
-
-Shihab — [github.com/Shihab369](https://github.com/Shihab369)
