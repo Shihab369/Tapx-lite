@@ -1,4 +1,7 @@
 services:
+
+  # PostgreSQL 15 primary database
+  # Data is persisted in a named volume so it survives container restarts.
   postgres:
     image: postgres:15-alpine
     container_name: tapx-postgres
@@ -17,6 +20,7 @@ services:
       timeout: 5s
       retries: 5
 
+  # Redis 7 included as a caching layer for future nonce lookups and balance reads.
   redis:
     image: redis:7
     container_name: tapx-redis
@@ -29,6 +33,9 @@ services:
       timeout: 5s
       retries: 5
 
+  # TapX Lite API starts only after both postgres and redis pass their health checks.
+  # DB_HOST overrides the .env value so the app resolves postgres by container name
+  # inside the Docker network rather than trying to reach localhost.
   app:
     image: tapx-lite:latest
     container_name: tapx-app
